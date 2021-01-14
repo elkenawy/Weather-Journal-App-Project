@@ -2,7 +2,7 @@
 
 /* Global Variables */
 const url = 'http://api.openweathermap.org/data/2.5/weather?zip=';
-const APIKey = 'c3ed1b9b0a10c05bf88dcdd3163389e3' ;
+const APIKey = '&appid=c3ed1b9b0a10c05bf88dcdd3163389e3&units=metric' ;
 
 // Create a new date instance dynamically with JS
 
@@ -18,14 +18,14 @@ document.getElementById('generate').addEventListener('click',action);
 function action(){
   const zip = document.getElementById('zip').value;
   const content = document.getElementById('feelings').value;
-    if(!zip || !feelings){
+    if(!zip || !content){
           alert('Please fill the required data!');
           return;
       }
   weatherData(url,zip,APIKey)
   .then(data=>{
     console.log(data)
-    postData('/add',{date:d, temp:data.main.temp, content:content});
+    postData('/add',{date:newDate, temp:data.main.temp, content:content});
     updateUI();
   });
 };
@@ -33,7 +33,7 @@ function action(){
 // Get Data Information From Api 
 
 const weatherData = async (url, zip, APIKey)=>{
-  const res = await fetch(`${url}${zip}&appid=${APIKey}`)
+  const res = await fetch(`${url}${zip}${APIKey}`)
   try {
     const data = res.json();
     console.log(data)
